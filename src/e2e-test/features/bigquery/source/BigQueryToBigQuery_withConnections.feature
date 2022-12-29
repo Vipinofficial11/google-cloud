@@ -1,4 +1,5 @@
 @BigQuery_Source
+@Conn
 Feature: BigQuery source - Verification of BigQuery to BigQuery successful data transfer using connections
 
   @BQ_SOURCE_TEST @BQ_SINK_TEST @BQ_CONNECTION
@@ -9,7 +10,7 @@ Feature: BigQuery source - Verification of BigQuery to BigQuery successful data 
     Then Enter input plugin property: "name" with value: "bqConnectionName"
     Then Replace input plugin property: "projectId" with value: "projectId"
     Then Enter input plugin property: "datasetProjectId" with value: "projectId"
-    Then Override Service account details if set in environment variables
+    Then Override Service account details in Wrangler connection page if set in environment variables
     Then Click plugin property: "testConnection" button
     Then Verify the test connection is successful
     Then Click plugin property: "connectionCreate" button

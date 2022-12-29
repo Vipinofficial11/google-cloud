@@ -1,4 +1,5 @@
 @BigQuery_Source
+@Conn
 Feature: BigQuery source - Verification of BigQuery to Multiple sinks successful data transfer
 
   @CMEK @BQ_SOURCE_TEST @GCS_SINK_TEST @BQ_SINK_TEST @PUBSUB_SINK_TEST @BigQuery_Source_Required @CMEK_Required
