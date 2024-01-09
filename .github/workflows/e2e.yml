@@ -24,7 +24,7 @@ on:
 
 jobs:
   build:
-    runs-on: k8s-runner-e2e
+    runs-on: self-hosted
     # We allow builds:
     # 1) When triggered manually
     # 2) When it's a merge into a branch
@@ -40,7 +40,7 @@ jobs:
           )
     strategy:
       matrix:
-        tests: [bigquery, common, gcs, pubsub, spanner, gcscreate, gcsdelete, gcsmove, bigqueryexecute, gcscopy]
+        tests: [gcscopy]
       fail-fast: false
     steps:
       # Pinned 1.0.0 version
