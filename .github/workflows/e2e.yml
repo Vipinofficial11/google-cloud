@@ -41,7 +41,7 @@ jobs:
           )
     strategy:
       matrix:
-        tests: [bigquerymultitable]
+        tests: [gcs, bigquerymultitable]
       fail-fast: false
     steps:
       # Pinned 1.0.0 version
