@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
   ~ Copyright © 2016-2019 Cask Data, Inc.
   ~
@@ -691,6 +692,12 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.19</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>org.powermock</groupId>
       <artifactId>powermock-module-junit4</artifactId>
       <version>${powermock.version}</version>
@@ -1159,78 +1166,116 @@
         </testResources>
       <plugins>
         <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.18.1</version>
-        <configuration>
-          <skipTests>true</skipTests>
-        </configuration>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0-M7</version>
+          <configuration>
+            <skipTests>true</skipTests>
+          </configuration>
         </plugin>
 
         <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <version>3.0.0-M5</version>
-        <configuration>
-          <includes>
-            <include>${TEST_RUNNER}</include>
-          </includes>
-          <!--Start configuration to run TestRunners in parallel-->
-          <parallel>classes</parallel> <!--Running TestRunner classes in parallel-->
-          <threadCount>2</threadCount> <!--Number of classes to run in parallel-->
-          <forkCount>2</forkCount> <!--Number of JVM processes -->
-          <reuseForks>true</reuseForks>
-          <!--End configuration to run TestRunners in parallel-->
-          <environmentVariables>
-            <GOOGLE_APPLICATION_CREDENTIALS>
-              ${GOOGLE_APPLICATION_CREDENTIALS}
-            </GOOGLE_APPLICATION_CREDENTIALS>
-            <SERVICE_ACCOUNT_TYPE>
-              ${SERVICE_ACCOUNT_TYPE}
-            </SERVICE_ACCOUNT_TYPE>
-            <SERVICE_ACCOUNT_FILE_PATH>
-              ${SERVICE_ACCOUNT_FILE_PATH}
-            </SERVICE_ACCOUNT_FILE_PATH>
-            <SERVICE_ACCOUNT_JSON>
-              ${SERVICE_ACCOUNT_JSON}
-            </SERVICE_ACCOUNT_JSON>
-          </environmentVariables>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>integration-test</goal>
-            </goals>
-          </execution>
-        </executions>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>3.0.0-M7</version>
+          <configuration>
+            <includes>
+              <include>${TEST_RUNNER}</include>
+            </includes>
+            <parallel>classes</parallel> <!--Running TestRunner classes in parallel-->
+            <threadCount>4</threadCount> <!--Number of classes to run in parallel-->
+            <forkCount>4</forkCount> <!--Number of JVM processes -->
+            <reuseForks>true</reuseForks>
+            <environmentVariables>
+              <GOOGLE_APPLICATION_CREDENTIALS>
+                ${GOOGLE_APPLICATION_CREDENTIALS}
+              </GOOGLE_APPLICATION_CREDENTIALS>
+              <SERVICE_ACCOUNT_TYPE>
+                ${SERVICE_ACCOUNT_TYPE}
+              </SERVICE_ACCOUNT_TYPE>
+              <SERVICE_ACCOUNT_FILE_PATH>
+                ${SERVICE_ACCOUNT_FILE_PATH}
+              </SERVICE_ACCOUNT_FILE_PATH>
+              <SERVICE_ACCOUNT_JSON>
+                ${SERVICE_ACCOUNT_JSON}
+              </SERVICE_ACCOUNT_JSON>
+            </environmentVariables>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
+<!--        -->
+<!--        <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-failsafe-plugin</artifactId>-->
+<!--        <version>2.22.2</version>-->
+<!--        <configuration>-->
+<!--          <includes>-->
+<!--            <include>${TEST_RUNNER}</include>-->
+<!--          </includes>-->
+<!--          &lt;!&ndash;Start configuration to run TestRunners in parallel&ndash;&gt;-->
+<!--          <parallel>classes</parallel> &lt;!&ndash;Running TestRunner classes in parallel&ndash;&gt;-->
+<!--          <threadCount>2</threadCount> &lt;!&ndash;Number of classes to run in parallel&ndash;&gt;-->
+<!--          <forkCount>2</forkCount> &lt;!&ndash;Number of JVM processes &ndash;&gt;-->
+<!--          <reuseForks>true</reuseForks>-->
+<!--          &lt;!&ndash;End configuration to run TestRunners in parallel&ndash;&gt;-->
+<!--          <environmentVariables>-->
+<!--            <GOOGLE_APPLICATION_CREDENTIALS>-->
+<!--              ${GOOGLE_APPLICATION_CREDENTIALS}-->
+<!--            </GOOGLE_APPLICATION_CREDENTIALS>-->
+<!--            <SERVICE_ACCOUNT_TYPE>-->
+<!--              ${SERVICE_ACCOUNT_TYPE}-->
+<!--            </SERVICE_ACCOUNT_TYPE>-->
+<!--            <SERVICE_ACCOUNT_FILE_PATH>-->
+<!--              ${SERVICE_ACCOUNT_FILE_PATH}-->
+<!--            </SERVICE_ACCOUNT_FILE_PATH>-->
+<!--            <SERVICE_ACCOUNT_JSON>-->
+<!--              ${SERVICE_ACCOUNT_JSON}-->
+<!--            </SERVICE_ACCOUNT_JSON>-->
+<!--          </environmentVariables>-->
+<!--        </configuration>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <goals>-->
+<!--              <goal>integration-test</goal>-->
+<!--&lt;!&ndash;              <goal>verify</goal>&ndash;&gt;-->
+<!--            </goals>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--        </plugin>-->
 
         <plugin>
-        <groupId>net.masterthought</groupId>
-        <artifactId>maven-cucumber-reporting</artifactId>
-        <version>5.5.0</version>
+          <groupId>net.masterthought</groupId>
+          <artifactId>maven-cucumber-reporting</artifactId>
+          <version>5.5.0</version>
 
-        <executions>
-          <execution>
-            <id>execution</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-            <configuration>
-              <projectName>Cucumber Reports</projectName> <!-- Replace with project name -->
-              <outputDirectory>target/cucumber-reports/advanced-reports</outputDirectory>
-              <buildNumber>1</buildNumber>
-              <skip>false</skip>
-              <inputDirectory>${project.build.directory}/cucumber-reports</inputDirectory>
-              <jsonFiles> <!-- supports wildcard or name pattern -->
-                <param>**/*.json</param>
-              </jsonFiles> <!-- optional, defaults to outputDirectory if not specified -->
-              <classificationDirectory>${project.build.directory}/cucumber-reports</classificationDirectory>
-              <checkBuildResult>true</checkBuildResult>
-            </configuration>
-          </execution>
-        </executions>
+          <executions>
+            <execution>
+              <id>cucumber-reports</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>generate</goal>
+              </goals>
+              <configuration>
+                <projectName>Cucumber Reports</projectName> <!-- Replace with project name -->
+                <outputDirectory>target/cucumber-reports/advanced-reports</outputDirectory>
+                <buildNumber>1</buildNumber>
+                <skip>false</skip>
+                <inputDirectory>${project.build.directory}/cucumber-reports</inputDirectory>
+                <jsonFiles> <!-- supports wildcard or name pattern -->
+                  <param>**/*.json</param>
+                </jsonFiles> <!-- optional, defaults to outputDirectory if not specified -->
+                <classificationDirectory>${project.build.directory}/cucumber-reports</classificationDirectory>
+                <checkBuildResult>true</checkBuildResult>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
       </plugins>
       </build>
