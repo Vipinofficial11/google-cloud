@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 /**
- * BigQueryMultiTable Plugin validation common step design..
+ * BigQueryMultiTable Plugin validation common step design.
  */
 public class BigQueryMultiTable {
     @Then("Validate the values of records transferred to BQMT sink is equal to the value from source " +
