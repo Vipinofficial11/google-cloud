@@ -27,7 +27,8 @@ import java.sql.SQLException;
  * BigQueryMultiTable Plugin validation common step design..
  */
 public class BigQueryMultiTable {
-    @Then("Validate the values of records transferred to BQMT sink is equal to the value from source MultiDatabase table")
+    @Then("Validate the values of records transferred to BQMT sink is equal to the value from source " +
+            "MultiDatabase table")
     public void validateTheValuesOfRecordsTransferredToBQMTsinkIsEqualToTheValuesFromSourceMultiDatabaseTable()
             throws InterruptedException, IOException, SQLException, ClassNotFoundException {
         boolean recordsMatched = BQMultiTableValidation.validateMySqlToBQRecordValues(
@@ -36,7 +37,8 @@ public class BigQueryMultiTable {
                 "of the records in the source table", recordsMatched);
     }
 
-    @Then("Validate the values of records transferred to BQMT sink is equal to the value from source MultiDatabasetable")
+    @Then("Validate the values of records transferred to BQMT sink is equal to the value from source " +
+            "MultiDatabasetable")
     public void validateTheValuesOfRecordsTransferredToBQMTSinkIsEqualToTheValueFromSourceMultiDatabasetable()
             throws SQLException, IOException, InterruptedException, ClassNotFoundException {
         boolean recordsMatched = BQMultiTableValidation.validateMySqlToBQRecordValues(
