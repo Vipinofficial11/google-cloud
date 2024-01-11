@@ -56,7 +56,7 @@ Feature: BigQueryMultiTable sink -Verification of MultipleDatabaseTable to BigQu
     Then Wait till pipeline is in running state
     Then Open and capture logs
     Then Verify the pipeline status is "Succeeded"
-    Then Validate the values of records transferred to BQMT sink is equal to the value from source MultiDatabase table
+    Then Validate the values of records transferred to BQMT sink is equal to the value from source MultiDatabasetable
 
   @MULTIPLEDATABASETABLE_SOURCE_TEST @BQMT_Required @PLUGIN-1669
   Scenario:Verify data is getting transferred from Multiple Database Tables to BQMT sink with split field
